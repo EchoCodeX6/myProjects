@@ -1,29 +1,33 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Date;
+ import java.awt.*;
+import java.awt.event.ActionEvent; 
+import java.awt.event.ActionListener; 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
-public class Solution {
-    public static void main(String args[]) {
-        JFrame frame = new JFrame("BANK MANAGEMENT SYSTEM");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+public class Solution { 
+    public static void main(String args[]) { 
+        JFrame frame = new JFrame("BANK MANAGEMENT SYSTEM"); 
+        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         frame.setSize(650, 450);
-        frame.setLayout(null);
-        Color bg = new Color(250, 250, 250);
+         frame.setLayout(null); 
+        Color bg = new Color(250, 250, 250); 
         frame.getContentPane().setBackground(bg);
 
         JPanel imagePanel = new ImagePanel(bg);
         imagePanel.setLayout(null);
         imagePanel.setBounds(0, 0, 650, 450);
         imagePanel.setBackground(bg);
-
+    
         JLabel heading = new JLabel("WELCOME TO ATM!");
         heading.setFont(new Font("Arial", Font.BOLD, 25));
         heading.setHorizontalAlignment(SwingConstants.CENTER);
         heading.setBounds(130, 50, 350, 40);
         imagePanel.add(heading);
-
+    
         JLabel cardNo = new JLabel("Card Number :");
         cardNo.setFont(new Font("Arial", Font.PLAIN, 19));
         JTextField textBox1 = new JTextField(16);
@@ -31,7 +35,7 @@ public class Solution {
         textBox1.setBounds(200, 150, 200, 30);
         imagePanel.add(cardNo);
         imagePanel.add(textBox1);
-
+    
         JLabel pinLabel = new JLabel("PIN :");
         pinLabel.setFont(new Font("Arial", Font.PLAIN, 19));
         JPasswordField pinField = new JPasswordField(4);
@@ -39,457 +43,32 @@ public class Solution {
         pinField.setBounds(200, 220, 200, 30);
         imagePanel.add(pinLabel);
         imagePanel.add(pinField);
-
+    
         JButton signField = new JButton("SIGN IN");
         signField.setBounds(200, 280, 80, 25);
         signField.setBackground(Color.BLACK);
         signField.setForeground(Color.WHITE);
         imagePanel.add(signField);
-
+        signField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cardNumber = textBox1.getText();
+                String pinNumber = new String(pinField.getPassword());
+                if (!cardNumber.isEmpty() && !pinNumber.isEmpty() && pinNumber.matches("\\d{4}") && cardNumber.matches("\\d{16}")) {
+                    frame.setVisible(false);
+                    openFrame5();
+                     
+                } else {
+                    JOptionPane.showMessageDialog(frame,"Fill the Details Correctly","Message",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
         JButton signField2 = new JButton("CLEAR");
         signField2.setBounds(320, 280, 80, 25);
         signField2.setBackground(Color.BLACK);
         signField2.setForeground(Color.WHITE);
         imagePanel.add(signField2);
-
-        JButton signField3 = new JButton("SIGN UP");
-        signField3.setBounds(200, 330, 200, 30);
-        signField3.setBackground(Color.BLACK);
-        signField3.setForeground(Color.WHITE);
-        imagePanel.add(signField3);
-
-        signField3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String cardNumber = textBox1.getText();
-                String pinNumber = new String(pinField.getPassword());
-                if (!cardNumber.isEmpty() && !pinNumber.isEmpty()) {
-                    frame.dispose();
-                    JFrame frame2 = new JFrame("SIGN UP");
-                    frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame2.setSize(950, 1000);
-                    frame2.setLayout(null);
-                    Color bg1 = new Color(250, 250, 250);
-                    frame2.getContentPane().setBackground(bg1);
-
-                    JPanel imagePanel2 = new ImagePanel(bg1);
-                    imagePanel2.setLayout(null);
-                    imagePanel2.setBounds(0, 0, 950, 900);
-                    frame2.add(imagePanel2);
-
-                    JLabel heading2 = new JLabel("APPLICATION FORM NO.6211");
-                    heading2.setFont(new Font("Arial", Font.BOLD, 25));
-                    heading2.setHorizontalAlignment(SwingConstants.CENTER);
-                    heading2.setBounds(130, 50, 450, 40);
-                    imagePanel2.add(heading2);
-
-                    JLabel subHeading = new JLabel("Page 1: Personal Details");
-                    subHeading.setFont(new Font("Arial",Font.LAYOUT_LEFT_TO_RIGHT,20));
-                    subHeading.setHorizontalAlignment(SwingConstants.CENTER);
-                    subHeading.setBounds(120,100,400,30);
-                    imagePanel2.add(subHeading);
-
-                    JLabel namLabel = new JLabel("Name      :");
-                    namLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                    namLabel.setBounds(130,155,150,30);
-                    JTextField namField = new JTextField();
-                    namField.setBounds(250,155,350,30);
-                    imagePanel2.add(namLabel);
-                    imagePanel2.add(namField);
-
-                    JLabel namLabel2 = new JLabel("Father Name  :");
-                    namLabel2.setFont(new Font("Arial",Font.PLAIN,20));
-                    namLabel2.setBounds(90,200,150,30);
-                    JTextField namField2 = new JTextField();
-                    namField2.setBounds(250,200,350,30);
-                    imagePanel2.add(namLabel2);
-                    imagePanel2.add(namField2);
-
-
-                    JLabel datLabel = new JLabel("Date of Birth  :");
-                    datLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                    datLabel.setBounds(90,250,150,30);
-                    SpinnerDateModel dateModel = new SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH);
-                    JSpinner dateSpinner = new JSpinner(dateModel);
-                    dateSpinner.setBounds(250, 250, 350, 30);
-                    JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
-                    dateSpinner.setEditor(editor);
-                    imagePanel2.add(datLabel);
-                    imagePanel2.add(dateSpinner);
-
-                    JLabel gLabel = new JLabel("Gender    :");
-                    gLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                    gLabel.setBounds(120,300,150,30);
-                    JRadioButton maleRadio = new JRadioButton("Male");
-                    JRadioButton femaleRadio = new JRadioButton("Female");
-                    maleRadio.setBounds(250, 300, 100, 30);
-                    femaleRadio.setBounds(410, 300, 100, 30);
-                    ButtonGroup gendeGroup = new ButtonGroup();
-                    gendeGroup.add(maleRadio);
-                    gendeGroup.add(femaleRadio);
-                    imagePanel2.add(gLabel);
-                    imagePanel2.add(maleRadio);
-                    imagePanel2.add(femaleRadio);
-
-                    JLabel emaiLabel = new JLabel("Email Address  :");
-                    emaiLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                    emaiLabel.setBounds(70,350,150,30);
-                    JTextField emaField = new JTextField();
-                    emaField.setBounds(250,350,350,30);
-                    imagePanel2.add(emaiLabel);
-                    imagePanel2.add(emaField);
-
-                    JLabel maritJLabel = new JLabel("Marital Status :");
-                    maritJLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                    maritJLabel.setBounds(81,400,150,30);
-                    JRadioButton sButton = new JRadioButton("Yes");
-                    JRadioButton sButton2 = new JRadioButton("No");
-                    JRadioButton sButton3 = new JRadioButton("Other");
-                    sButton.setBounds(250, 400, 100, 30);
-                    sButton2.setBounds(375, 400, 100, 30);
-                    sButton3.setBounds(500, 400, 100, 30);
-                    ButtonGroup gendeGroup2 = new ButtonGroup();
-                    gendeGroup2.add(sButton);
-                    gendeGroup2.add(sButton2);
-                    gendeGroup2.add(sButton3);
-                    imagePanel2.add(maritJLabel);
-                    imagePanel2.add(sButton);
-                    imagePanel2.add(sButton2);
-                    imagePanel2.add(sButton3);
-
-                    JLabel addJLabel = new JLabel("Address  :");
-                    addJLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-                    addJLabel.setBounds(130, 460, 150, 30); 
-                    JTextField addField = new JTextField();
-                    addField.setBounds(250, 460, 350, 30);
-                    imagePanel2.add(addJLabel);
-                    imagePanel2.add(addField);
-                    
-                    JLabel ciLabel = new JLabel("City   :");
-                    ciLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-                    ciLabel.setBounds(160, 510, 150, 30);
-                    JTextField cTextField = new JTextField();
-                    cTextField.setBounds(250, 510, 350, 30);
-                    imagePanel2.add(ciLabel);
-                    imagePanel2.add(cTextField);
-
-                    JLabel pinLabel = new JLabel("Pin Code   :");
-                    pinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-                    pinLabel.setBounds(110, 560, 150, 30);
-                    
-                    JTextField pinField = new JTextField();
-                    pinField.setBounds(250, 560, 350, 30);
-                    
-                    imagePanel2.add(pinLabel);
-                    imagePanel2.add(pinField);
-
-                    JLabel statLabel = new JLabel("State   :");
-                    statLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-                    statLabel.setBounds(145, 610, 150, 30);
-                    
-                    JTextField staField = new JTextField();
-                    staField.setBounds(250, 610, 350, 30);
-                    
-                    imagePanel2.add(statLabel);
-                    imagePanel2.add(staField);
-
-                    JButton nexButton = new JButton("Next");
-                    nexButton.setBounds(540,650,60,30);
-                    nexButton.setForeground(Color.WHITE);
-                    nexButton.setBackground(Color.BLACK);
-                    imagePanel2.add(nexButton);
-
-
-                    nexButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                         
-
-                          /*  if(!namField.getText().isEmpty() && !namField2.getText().isEmpty() && !emaField.getText().isEmpty() && !addField.getText().isEmpty() && !cTextField.getText().isEmpty() && !pinField.getText().isEmpty() && !staField.getText().isEmpty()) { */ 
-
-            
-                            frame2.dispose();
-                            
-                             JFrame frame3 = new JFrame("SIGN UP");
-                             frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                             frame3.setSize(950,1000);
-                             frame3.setLayout(null);
-                             Color bg2Color = new Color(250,250,250);
-                             frame3.getContentPane().setBackground(bg2Color);
-
-                             JPanel imagPanel3 = new ImagePanel(bg2Color);
-                             imagPanel3.setLayout(null);
-                             imagPanel3.setBounds(0,0,1000,950);
-                             frame3.add(imagPanel3);
-
-                             JLabel hLabel = new JLabel("Page  2 : Additional Details");
-                             hLabel.setFont(new Font("Arial",Font.BOLD,30));
-                             hLabel.setBounds(130, 50, 450, 40);
-                             hLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                             imagPanel3.add(hLabel);
-
-                             JLabel sub = new JLabel("form no: 6211");
-                             sub.setFont(new Font("Arial",Font.PLAIN,20));
-                             sub.setBounds(700,50,400,40);
-                             imagPanel3.add(sub);
-
-                             JLabel reliLabel = new JLabel("Religion      :");
-                             reliLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                             reliLabel.setBounds(140,140,150,30);
-                             String[] religion = {"Hindu", "Christian","Muslim","Sikh","Other"};
-                             JComboBox<String> comboBox = new JComboBox<>(religion);
-                             comboBox.setBounds(290,140,350,30);
-                             comboBox.setBackground(Color.WHITE);
-                             comboBox.setSelectedItem(null);
-                             imagPanel3.add(comboBox);
-                             imagPanel3.add(reliLabel);
-                            
-                             JLabel catLabel = new JLabel("Category     :");
-                             catLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                             catLabel.setBounds(133,190,150,30);
-                             String[] category={"General","OBC","SC","ST","Others"};
-                             JComboBox<String> comboBox2 = new JComboBox<>(category);
-                             comboBox2.setBounds(290,190,350,30);
-                             comboBox2.setBackground(Color.WHITE);
-                             comboBox2.setSelectedItem(null);
-                             imagPanel3.add(comboBox2);
-                             imagPanel3.add(catLabel);
-
-                             JLabel invLabel = new JLabel("Income       :");
-                             invLabel.setBounds(140,240,150,30);
-                             invLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                             String[] income = {"Null","<1,50,000","<2,50,000","<5,00,000","upto 10,00,000","Above 10,00,000"};
-                             JComboBox<String> comboBox3 = new JComboBox<>(income);
-                             comboBox3.setBounds(291,240,350,30);
-                             comboBox3.setBackground(Color.WHITE);
-                             comboBox3.setSelectedItem(null);
-                             imagPanel3.add(comboBox3);
-                             imagPanel3.add(invLabel);
-
-
-                             JLabel eduLabel = new JLabel("<html>Educational    :<br>Qualification</html>");
-                             eduLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                             eduLabel.setBounds(135,294,150,50);
-                             String[] education = {"Non-Graduate","Graduate","Post-Graduate","Doctrate","Others"};
-                             JComboBox<String> comboBox4 = new JComboBox<>(education);
-                             comboBox4.setBounds(290,298,350,30);
-                             comboBox4.setBackground(Color.WHITE);
-                             comboBox4.setSelectedItem(null);
-                             imagPanel3.add(comboBox4);
-                             imagPanel3.add(eduLabel);
-
-                             JLabel occLabel = new JLabel("Occupation   :");
-                             occLabel.setBounds(130,360,150,30);
-                             occLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                             JTextField occField = new JTextField();
-                             occField.setBounds(290,360,350,30);
-                             imagPanel3.add(occLabel);
-                             imagPanel3.add(occField);
-
-                             JLabel pLabel = new JLabel("Pan Number   :");
-                             pLabel.setBounds(122,420,150,30);
-                             pLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                             JTextField occField2 = new JTextField();
-                             occField2.setBounds(290,420,350,30);
-                             imagPanel3.add(pLabel);
-                             imagPanel3.add(occField2);
-
-
-                             JLabel occLabel1 = new JLabel("<html>Aadhar       :<br>Number</html>");
-                             occLabel1.setBounds(140,475,150,50);
-                             occLabel1.setFont(new Font("Arial",Font.PLAIN,20));
-                             JTextField occField3 = new JTextField();
-                             occField3.setBounds(290,483,350,30);
-                             imagPanel3.add(occLabel1);
-                             imagPanel3.add(occField3);
-
-
-                            JLabel senLabel = new JLabel("Senior Citizen   :");
-                            senLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                            senLabel.setBounds(107,540,150,30);
-                            JRadioButton b1 = new JRadioButton("Yes");
-                            JRadioButton b2 = new JRadioButton("No");
-                            b1.setBounds(290,540,100,30);
-                            b2.setBounds(420,540,100,30);
-                            ButtonGroup buttonGroup = new ButtonGroup();
-                            buttonGroup.add(b1);
-                            buttonGroup.add(b2); 
-                            imagPanel3.add(senLabel);
-                            imagPanel3.add(b1);
-                            imagPanel3.add(b2);
-
-
-                            JLabel eLabel = new JLabel("<html>Existing   :<br>Acount</html>");
-                            eLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                            eLabel.setBounds(170,590,150,50);
-                            JRadioButton b1e = new JRadioButton("Yes");
-                            JRadioButton b2e = new JRadioButton("No");
-                            b1e.setBounds(290,594,100,30);
-                            b2e.setBounds(420,594,100,30);
-                            ButtonGroup buttonGroup2 = new ButtonGroup();
-                            buttonGroup2.add(b1e);
-                            buttonGroup2.add(b2e);
-                            imagPanel3.add(eLabel);
-                            imagPanel3.add(b1e);
-                            imagPanel3.add(b2e);
-
-
-                         JButton nexButton1 = new JButton("Next");
-                         nexButton1.setBounds(590,650,60,30);
-                         nexButton1.setForeground(Color.WHITE);
-                         nexButton1.setBackground(Color.BLACK);
-                         imagPanel3.add(nexButton1);
-
-
-                        nexButton1.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                frame3.dispose();
-
-                            JFrame frame3 = new JFrame("SIGN UP");
-                            frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                            frame3.setSize(950, 1000);
-                            frame3.setLayout(null);
-                            Color bg2 = new Color(250, 250, 250);
-                            frame3.getContentPane().setBackground(bg2);
-
-                            JPanel imagePanel4 = new ImagePanel(bg2);
-                            imagePanel4.setLayout(null);
-                            imagePanel4.setBounds(0, 0, 950, 900);
-                            frame3.add(imagePanel4);
-
-
-                            JLabel hd = new JLabel("Page 3 : Account Details");
-                            hd.setFont(new Font("Arial",Font.PLAIN,30));
-                            hd.setBounds(130, 50, 450, 40);
-                            hd.setHorizontalAlignment(SwingConstants.CENTER);
-                            imagePanel4.add(hd);
-
-                            JLabel hd1 = new JLabel("form no : 6211");
-                            hd1.setFont(new Font("Arial",Font.PLAIN,15));
-                            hd1.setBounds(700,50,400,40);
-                            imagePanel4.add(hd1);
-
-                            JLabel lJLabel = new JLabel("Account Type    :");
-                            lJLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                            lJLabel.setBounds(110,130,450,40);
-                            imagePanel4.add(lJLabel);
-
-                            JRadioButton b1Button = new JRadioButton("Saving Account");
-                            b1Button.setBounds(160,180,190,40);
-                            JRadioButton b2Button = new JRadioButton("Fixed Deposit Account");
-                            b2Button.setBounds(500,180,190,40);
-                            JRadioButton b3Button = new JRadioButton("Current Account");
-                            b3Button.setBounds(160,240,190,40);
-                            JRadioButton b4Button = new JRadioButton("Recurring Deposit Amount");
-                            b4Button.setBounds(500,240,190,40);
-
-                            ButtonGroup buttonGroup3 =new ButtonGroup();
-                            buttonGroup3.add(b1Button);
-                            buttonGroup3.add(b2Button);
-                            buttonGroup3.add(b3Button);
-                            buttonGroup3.add(b4Button);
-
-                            imagePanel4.add(lJLabel);
-                            imagePanel4.add(b1Button);
-                            imagePanel4.add(b2Button);
-                            imagePanel4.add(b3Button);
-                            imagePanel4.add(b4Button);
-
-                            JLabel cardJLabel = new JLabel("<html>Card Number<br>(your 18 digit card number)</html>");
-                            cardJLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                            cardJLabel.setBounds(110,290,450,60);
-                            imagePanel4.add(cardJLabel);
-
-                            JLabel cardJLabel2 = new JLabel(":");
-                            cardJLabel2.setBounds(380,285,450,60);
-                            imagePanel4.add(cardJLabel2);
-
-                            JLabel cardJLabel3 = new JLabel("<html>XXXX-XXXX-XXXX-4184<br>(It would be appear on ATM<br>card/chequeue Book & Statements)</html>");
-                            cardJLabel3.setBounds(440,300,450,70);
-                            cardJLabel3.setFont(new Font("Arial",Font.PLAIN,17));
-                            imagePanel4.add(cardJLabel3);
-
-                            JLabel cardJLabel4 = new JLabel("PIN       :");
-                            cardJLabel4.setFont(new Font("Arial",Font.PLAIN,20));
-                            cardJLabel4.setBounds(305,350,450,70);
-                            imagePanel4.add(cardJLabel4);
-
-                            JLabel pinJLabel = new JLabel("XXXX");
-                            pinJLabel.setBounds(450,370,450,30);
-                            pinJLabel.setFont(new Font("Arial",Font.PLAIN,18));
-                            imagePanel4.add(pinJLabel);
-
-                            JLabel serLabel = new JLabel("Services Required      :");
-                            serLabel.setBounds(110,410,450,30);
-                            serLabel.setFont(new Font("Arial",Font.PLAIN,20));
-                            imagePanel4.add(serLabel);
-
-
-                             JCheckBox b1Box = new JCheckBox("ATM Card");
-                             b1Box.setBounds(110,460,200,50);
-                             JCheckBox b2Box = new JCheckBox("Mobile Banking");
-                             b2Box.setBounds(355,460,200,50);
-                             JCheckBox b3Box = new JCheckBox("Internet Banking");
-                             b3Box.setBounds(110,520,200,50);
-                             JCheckBox b4Box = new JCheckBox("E-MAIL Address");
-                             b4Box.setBounds(600,460,200,50);
-                             JCheckBox b5Box = new JCheckBox("Cheque Book");
-                             b5Box.setBounds(355,520,200,50);
-                             JCheckBox b6Box = new JCheckBox("E Statement");
-                             b6Box.setBounds(600,520,200,50);
-
-                             imagePanel4.add(b1Box);
-                             imagePanel4.add(b2Box);
-                             imagePanel4.add(b3Box);
-                             imagePanel4.add(b4Box);
-                             imagePanel4.add(b5Box);
-                             imagePanel4.add(b6Box);
-                             imagePanel4.add(serLabel);
-
-                            JCheckBox box = new JCheckBox("I here by declares that the above entered details correct to the best of my knowledge.");
-                            box.setFont(new Font("Arial",Font.PLAIN,20));
-                            box.setBounds(120,600,790,30);
-                            imagePanel4.add(box);
-
-                            JButton sub = new JButton("Submit");
-                            sub.setBackground(Color.BLACK);
-                            sub.setForeground(Color.WHITE);
-                            sub.setBounds(300,650,100,30);
-                            imagePanel4.add(sub);
-
-                            JButton sub2 = new JButton("Cancel");
-                            sub2.setBackground(Color.BLACK);
-                            sub2.setForeground(Color.white);
-                            sub2.setBounds(550,650,100,30);
-                            imagePanel4.add(sub2);
-
-                            frame3.setVisible(true);
-
-                            }
-                            
-                        });
-                            frame3.setVisible(true);
-
-                            /*  else {
-                                JOptionPane.showMessageDialog(frame2, "Enter Details", "Error",JOptionPane.ERROR_MESSAGE);
-
-                            }
-                                */
-                        
-                        
-                    
-                    }
-                    });
-
-                    frame2.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Please enter Card Number and PIN", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-            }
-        });
-    
         signField2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -497,29 +76,923 @@ public class Solution {
                 pinField.setText("");
             }
         });
+    
+
+    
+        JButton signField3 = new JButton("SIGN UP");
+        signField3.setBounds(200, 330, 200, 30);
+        signField3.setBackground(Color.BLACK);
+        signField3.setForeground(Color.WHITE);
+        imagePanel.add(signField3);
+        signField3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                     openFrame2();
+            }
+        });
 
         frame.add(imagePanel);
         frame.setVisible(true);
     }
+    public static void openFrame2() {
+        JFrame frame2 = new JFrame("SIGN UP");
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.setSize(950, 1000);
+        frame2.setLayout(null);
+        Color bg1 = new Color(250, 250, 250);
+        frame2.getContentPane().setBackground(bg1);
 
-    static class ImagePanel extends JPanel {
-        private Color backgroundColor;
+        JPanel imagePanel2 = new ImagePanel(bg1);
+        imagePanel2.setLayout(null);
+        imagePanel2.setBounds(0, 0, 950, 900);
+        frame2.add(imagePanel2);
 
-        public ImagePanel(Color bg) {
-            this.backgroundColor = bg;
-            setBackground(backgroundColor);
-        }
+        JLabel heading2 = new JLabel("APPLICATION FORM NO.6211");
+        heading2.setFont(new Font("Arial", Font.BOLD, 25));
+        heading2.setHorizontalAlignment(SwingConstants.CENTER);
+        heading2.setBounds(130, 50, 450, 40);
+        imagePanel2.add(heading2);
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            ImageIcon icon = new ImageIcon("resources/bankImage.jpg");
-            Image image = icon.getImage();
-            int x = 30;
-            int y = 20;
-            int width = 90;
-            int height = 90;
-            g.drawImage(image, x, y, width, height, this);
+        JLabel subHeading = new JLabel("Page 1: Personal Details");
+        subHeading.setFont(new Font("Arial",Font.LAYOUT_LEFT_TO_RIGHT,20));
+        subHeading.setHorizontalAlignment(SwingConstants.CENTER);
+        subHeading.setBounds(120,100,400,30);
+        imagePanel2.add(subHeading);
+
+        JLabel namLabel = new JLabel("Name      :");
+        namLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        namLabel.setBounds(130,155,150,30);
+        JTextField namField = new JTextField();
+        namField.setBounds(250,155,350,30);
+        imagePanel2.add(namLabel);
+        imagePanel2.add(namField);
+
+        JLabel namLabel2 = new JLabel("Father Name  :");
+        namLabel2.setFont(new Font("Arial",Font.PLAIN,20));
+        namLabel2.setBounds(90,200,150,30);
+        JTextField namField2 = new JTextField();
+        namField2.setBounds(250,200,350,30);
+        imagePanel2.add(namLabel2);
+        imagePanel2.add(namField2);
+
+        JLabel dobLabel = new JLabel("Date of Birth:");
+        dobLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        dobLabel.setBounds(100,250,150,30);
+        imagePanel2.add(dobLabel);
+
+        JTextField dobField = new JTextField("DD/MM/YYYY");
+        dobField.setBounds(250, 250, 350, 30);
+        dobField.setForeground(Color.GRAY);
+        imagePanel2.add(dobField);   
+
+
+dobField.addFocusListener(new FocusAdapter() {
+    @Override
+    public void focusGained(FocusEvent e) {
+        if (dobField.getText().equals("DD/MM/YYYY")) {
+            dobField.setText("");
+            dobField.setForeground(Color.BLACK);
         }
     }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (dobField.getText().isEmpty()) {
+            dobField.setText("DD/MM/YYYY");
+            dobField.setForeground(Color.GRAY); 
+        }
+    }
+});
+
+imagePanel2.add(dobField);
+
+
+        JLabel gLabel = new JLabel("Gender    :");
+        gLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        gLabel.setBounds(120,300,150,30);
+        JRadioButton maleRadio = new JRadioButton("Male");
+        JRadioButton femaleRadio = new JRadioButton("Female");
+        maleRadio.setBounds(250, 300, 100, 30);
+        femaleRadio.setBounds(410, 300, 100, 30);
+        ButtonGroup gendeGroup = new ButtonGroup();
+        gendeGroup.add(maleRadio);
+        gendeGroup.add(femaleRadio);
+        imagePanel2.add(gLabel);
+        imagePanel2.add(maleRadio);
+        imagePanel2.add(femaleRadio);
+
+        JLabel emaiLabel = new JLabel("Email Address  :");
+        emaiLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        emaiLabel.setBounds(70,350,150,30);
+        JTextField emaField = new JTextField();
+        emaField.setBounds(250,350,350,30);
+        imagePanel2.add(emaiLabel);
+        imagePanel2.add(emaField);
+
+        JLabel maritJLabel = new JLabel("Marital Status :");
+        maritJLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        maritJLabel.setBounds(81,400,150,30);
+        JRadioButton sButton = new JRadioButton("Yes");
+        JRadioButton sButton2 = new JRadioButton("No");
+        JRadioButton sButton3 = new JRadioButton("Other");
+        sButton.setBounds(250, 400, 100, 30);
+        sButton2.setBounds(375, 400, 100, 30);
+        sButton3.setBounds(500, 400, 100, 30);
+        ButtonGroup gendeGroup2 = new ButtonGroup();
+        gendeGroup2.add(sButton);
+        gendeGroup2.add(sButton2);
+        gendeGroup2.add(sButton3);
+        imagePanel2.add(maritJLabel);
+        imagePanel2.add(sButton);
+        imagePanel2.add(sButton2);
+        imagePanel2.add(sButton3);
+
+        JLabel addJLabel = new JLabel("Address  :");
+        addJLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        addJLabel.setBounds(130, 460, 150, 30); 
+        JTextField addField = new JTextField();
+        addField.setBounds(250, 460, 350, 30);
+        imagePanel2.add(addJLabel);
+        imagePanel2.add(addField);
+        
+        JLabel ciLabel = new JLabel("City   :");
+        ciLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        ciLabel.setBounds(160, 510, 150, 30);
+        JTextField cTextField = new JTextField();
+        cTextField.setBounds(250, 510, 350, 30);
+        imagePanel2.add(ciLabel);
+        imagePanel2.add(cTextField);
+
+        JLabel pinLabel = new JLabel("Pin Code   :");
+        pinLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        pinLabel.setBounds(110, 560, 150, 30);
+        
+        JTextField pinField = new JTextField();
+        pinField.setBounds(250, 560, 350, 30);
+        
+        imagePanel2.add(pinLabel);
+        imagePanel2.add(pinField);
+
+        JLabel statLabel = new JLabel("State   :");
+        statLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        statLabel.setBounds(145, 610, 150, 30);
+        
+        JTextField staField = new JTextField();
+        staField.setBounds(250, 610, 350, 30);
+        
+        imagePanel2.add(statLabel);
+        imagePanel2.add(staField);
+
+        JButton nexButton = new JButton("Next");
+        nexButton.setBounds(540,650,60,30);
+        nexButton.setForeground(Color.WHITE);
+        nexButton.setBackground(Color.BLACK);
+        imagePanel2.add(nexButton);
+        nexButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               String name = namField.getText().trim();
+               String fatherName = namField2.getText().trim();
+               String dob = dobField.getText().trim();
+               String email = emaField.getText().trim();
+               String address = addField.getText().trim();
+               String city = cTextField.getText().trim();
+               String pin = pinField.getText().trim();
+               String state = staField.getText().trim();
+
+               boolean gender = maleRadio.isSelected() || femaleRadio.isSelected();
+               boolean marriage = sButton.isSelected() || sButton2.isSelected() || sButton3.isSelected();
+               if(name.isEmpty() || fatherName.isEmpty() || dob.isEmpty() || email.isEmpty() || address.isEmpty() || city.isEmpty() || pin.isEmpty() || state.isEmpty() || !gender || !marriage) {
+                   JOptionPane.showMessageDialog(frame2,"Fill all the details","Message",JOptionPane.ERROR_MESSAGE);
+                   return;
+               }
+               if (name.isEmpty() || fatherName.isEmpty() || dob.isEmpty() || email.isEmpty() || 
+               address.isEmpty() || city.isEmpty() || pin.isEmpty() || state.isEmpty()) {
+               JOptionPane.showMessageDialog(frame2, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+           if (!name.matches("[a-zA-Z ]+")) {
+               JOptionPane.showMessageDialog(frame2, "Name should only contain letters", "Error", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+           if (!fatherName.matches("[a-zA-Z ]+")) {
+               JOptionPane.showMessageDialog(frame2, "Father's Name should only contain letters", "Error", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+           if (!city.matches("[a-zA-Z ]+")) {
+               JOptionPane.showMessageDialog(frame2, "City should only contain letters", "Error", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+           if (!state.matches("[a-zA-Z ]+")) {
+               JOptionPane.showMessageDialog(frame2, "State should only contain letters", "Error", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+           if (!pin.matches("\\d{6}")) {
+               JOptionPane.showMessageDialog(frame2, "Pincode must be exactly 6 digits", "Error", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+   
+           JOptionPane.showMessageDialog(frame2, "Form submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+               
+                frame2.dispose();
+                openFrame3();
+                
+            }
+        });
+        frame2.add(imagePanel2);
+         frame2.setVisible(true);
+
+
+    }
+    public static void openFrame3() {
+        JFrame frame3 = new JFrame("SIGN UP");
+        frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame3.setSize(950, 1000);
+        frame3.setLayout(null);
+        Color bg2 = new Color(250, 250, 250);
+        frame3.getContentPane().setBackground(bg2);
+
+        JPanel imagePanel4 = new ImagePanel(bg2);
+        imagePanel4.setLayout(null);
+        imagePanel4.setBounds(0, 0, 950, 900);
+        frame3.add(imagePanel4);
+
+
+        JLabel hd = new JLabel("Page 3 : Account Details");
+        hd.setFont(new Font("Arial",Font.PLAIN,30));
+        hd.setBounds(130, 50, 450, 40);
+        hd.setHorizontalAlignment(SwingConstants.CENTER);
+        imagePanel4.add(hd);
+
+        JLabel hd1 = new JLabel("form no : 6211");
+        hd1.setFont(new Font("Arial",Font.PLAIN,15));
+        hd1.setBounds(700,50,400,40);
+        imagePanel4.add(hd1);
+
+        JLabel lJLabel = new JLabel("Account Type    :");
+        lJLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        lJLabel.setBounds(110,130,450,40);
+        imagePanel4.add(lJLabel);
+
+        JRadioButton b1Button = new JRadioButton("Saving Account");
+        b1Button.setBounds(160,180,190,40);
+        JRadioButton b2Button = new JRadioButton("Fixed Deposit Account");
+        b2Button.setBounds(500,180,190,40);
+        JRadioButton b3Button = new JRadioButton("Current Account");
+        b3Button.setBounds(160,240,190,40);
+        JRadioButton b4Button = new JRadioButton("Recurring Deposit Amount");
+        b4Button.setBounds(500,240,190,40);
+
+        ButtonGroup buttonGroup3 =new ButtonGroup();
+        buttonGroup3.add(b1Button);
+        buttonGroup3.add(b2Button);
+        buttonGroup3.add(b3Button);
+        buttonGroup3.add(b4Button);
+
+        imagePanel4.add(lJLabel);
+        imagePanel4.add(b1Button);
+        imagePanel4.add(b2Button);
+        imagePanel4.add(b3Button);
+        imagePanel4.add(b4Button);
+
+        JLabel cardJLabel = new JLabel("<html>Card Number<br>(your 18 digit card number)</html>");
+        cardJLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        cardJLabel.setBounds(110,290,450,60);
+        imagePanel4.add(cardJLabel);
+
+        JLabel cardJLabel2 = new JLabel(":");
+        cardJLabel2.setBounds(380,285,450,60);
+        imagePanel4.add(cardJLabel2);
+
+        JLabel cardJLabel3 = new JLabel("<html>XXXX-XXXX-XXXX-4184<br>(It would be appear on ATM<br>card/chequeue Book & Statements)</html>");
+        cardJLabel3.setBounds(440,300,450,70);
+        cardJLabel3.setFont(new Font("Arial",Font.PLAIN,17));
+        imagePanel4.add(cardJLabel3);
+
+        JLabel cardJLabel4 = new JLabel("PIN       :");
+        cardJLabel4.setFont(new Font("Arial",Font.PLAIN,20));
+        cardJLabel4.setBounds(305,350,450,70);
+        imagePanel4.add(cardJLabel4);
+
+        JLabel pinJLabel = new JLabel("XXXX");
+        pinJLabel.setBounds(450,370,450,30);
+        pinJLabel.setFont(new Font("Arial",Font.PLAIN,18));
+        imagePanel4.add(pinJLabel);
+
+        JLabel serLabel = new JLabel("Services Required      :");
+        serLabel.setBounds(110,410,450,30);
+        serLabel.setFont(new Font("Arial",Font.PLAIN,20));
+        imagePanel4.add(serLabel);
+
+
+         JCheckBox b1Box = new JCheckBox("ATM Card");
+         b1Box.setBounds(110,460,200,50);
+         JCheckBox b2Box = new JCheckBox("Mobile Banking");
+         b2Box.setBounds(355,460,200,50);
+         JCheckBox b3Box = new JCheckBox("Internet Banking");
+         b3Box.setBounds(110,520,200,50);
+         JCheckBox b4Box = new JCheckBox("E-MAIL Address");
+         b4Box.setBounds(600,460,200,50);
+         JCheckBox b5Box = new JCheckBox("Cheque Book");
+         b5Box.setBounds(355,520,200,50);
+         JCheckBox b6Box = new JCheckBox("E Statement");
+         b6Box.setBounds(600,520,200,50);
+
+         imagePanel4.add(b1Box);
+         imagePanel4.add(b2Box);
+         imagePanel4.add(b3Box);
+         imagePanel4.add(b4Box);
+         imagePanel4.add(b5Box);
+         imagePanel4.add(b6Box);
+         imagePanel4.add(serLabel);
+
+        JCheckBox box = new JCheckBox("I here by declares that the above entered details correct to the best of my knowledge.");
+        box.setFont(new Font("Arial",Font.PLAIN,20));
+        box.setBounds(120,600,790,30);
+        imagePanel4.add(box);
+
+        JButton sub = new JButton("Submit");
+        sub.setBackground(Color.BLACK);
+        sub.setForeground(Color.WHITE);
+        sub.setBounds(390,650,100,30);
+        imagePanel4.add(sub);
+        sub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = b1Button.isSelected() || b2Button.isSelected() || b3Button.isSelected() || b4Button.isSelected();
+                boolean servicesSelected = b1Box.isSelected() || b2Box.isSelected() || b3Box.isSelected() ||
+                                           b4Box.isSelected() || b5Box.isSelected() || b6Box.isSelected();
+                boolean declarationChecked = box.isSelected();       
+                if (!selected) {
+                    JOptionPane.showMessageDialog(frame3, "Please select an account type", "Message", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (!servicesSelected) {
+                    JOptionPane.showMessageDialog(frame3, "Please select at least one service", "Message", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }          
+                if (!declarationChecked) {
+                    JOptionPane.showMessageDialog(frame3, "You must agree to the declaration before proceeding", "Message", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }
+                JOptionPane.showMessageDialog(frame3, "Submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+                frame3.dispose();
+                openFrame4();
+            }  
+        });
+        
+
+        frame3.add(imagePanel4);
+       frame3.setVisible(true);
+    }
+    public static void openFrame4() {
+        JFrame frame4 = new JFrame("Deposit");
+        frame4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame4.setSize(900, 500);
+        frame4.setLayout(null);
+        frame4.setBackground(Color.BLACK);
+
+        JPanel pJPanel = new JPanel();
+        pJPanel.setLayout(null);
+        pJPanel.setBounds(0,0,900,500);
+        pJPanel.setBackground(Color.BLACK);
+        pJPanel.setForeground(Color.WHITE);
+        
+        JLabel label1 = new JLabel("Enter Amount You Want to Deposit");
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
+        label1.setBounds(90,20,600,50);
+        label1.setFont(new Font("Arial",Font.PLAIN,30));
+        label1.setForeground(Color.WHITE);
+        pJPanel.add(label1);
+
+        JTextField lbox = new JTextField("Rs.");
+        lbox.setBounds(180,130,450,30);
+        lbox.setHorizontalAlignment(SwingConstants.CENTER);
+        pJPanel.add(lbox);
+
+        JButton deposit=new JButton("Deposit");
+        deposit.setBackground(Color.WHITE);
+        deposit.setForeground(Color.BLACK);
+        deposit.setBounds(600,200,150,30);
+        pJPanel.add(deposit);
+        deposit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String amountText = lbox.getText().trim();
+                amountText = amountText.replaceAll("[^0-9]", "");
+                if(!amountText.isEmpty() && amountText.matches("\\d+") && Integer.parseInt(amountText) > 0) { 
+                    JOptionPane.showMessageDialog(frame4,"Rs. " + amountText + " is Debited");
+                }else {
+                    JOptionPane.showMessageDialog(frame4,"Invalid");
+
+
+                }
+            }
+        });
+        JButton Back = new JButton("Back");
+        Back.setBounds(600,260,150,30);
+        Back.setBackground(Color.WHITE);
+        Back.setForeground(Color.BLACK);
+        pJPanel.add(Back);
+        Back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               frame4.setVisible(false);
+               openFrame5();
+            }
+        });
+      
+        frame4.add(pJPanel);
+        frame4.setVisible(true);                               
+    }
+
+    
+
+    public static void openFrame5() {
+        JFrame frame5;
+
+        frame5 = new JFrame("ATM");
+        frame5.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame5.setSize(900, 500);
+        frame5.setLayout(null);
+        frame5.setBackground(Color.BLACK);
+
+        JPanel pJPanel1 = new JPanel();
+        pJPanel1.setLayout(null);
+        pJPanel1.setBounds(0,0,900,500);
+       pJPanel1.setBackground(Color.BLACK);
+        pJPanel1.setForeground(Color.WHITE);
+        frame5.add(pJPanel1);
+
+        JLabel lable=new JLabel("Select Your Transaction");
+        lable.setFont(new Font("Arial",Font.BOLD,30));
+        lable.setHorizontalAlignment(SwingConstants.CENTER);
+        lable.setForeground(Color.WHITE);
+        lable.setBounds(140,20,500,50);
+        pJPanel1.add(lable);
+
+        JButton deposiButton=new JButton("Deposit");
+        deposiButton.setBounds(170,100,150,50);
+        deposiButton.setBackground(Color.WHITE);
+        deposiButton.setForeground(Color.BLACK);
+        pJPanel1.add(deposiButton);
+
+        deposiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openFrame4();
+                frame5.setVisible(false);
+
+            }
+        });
+        JButton cashButton = new JButton("Fast Cash");
+        cashButton.setBackground(Color.WHITE);
+        cashButton.setForeground(Color.BLACK);
+        cashButton.setBounds(170,170,150,50);
+        pJPanel1.add(cashButton);
+        cashButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame5.setVisible(false);
+                JFrame frame6 = new JFrame("Fast Cash");
+                frame6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame6.setSize(900, 450);
+                frame6.setLayout(null);
+
+                JPanel panel1 = new JPanel();
+                panel1.setLayout(null);
+                panel1.setSize(900, 500);
+                panel1.setBackground(Color.BLACK);
+                frame6.add(panel1);
+
+                JLabel label1 = new JLabel("Select Withdrawl Amount");
+                label1.setHorizontalAlignment(SwingConstants.CENTER);
+                label1.setFont(new Font("Arial",Font.PLAIN,30));
+                label1.setBounds(120,30,550,50);
+                label1.setForeground(Color.WHITE);
+                panel1.add(label1);
+
+                JButton b1Button = new JButton("Rs.100");
+                b1Button.setBounds(170,100,150,50);
+                b1Button.setBackground(Color.WHITE);
+                b1Button.setForeground(Color.BLACK);
+                panel1.add(b1Button);
+                b1Button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(frame6,"Rs.100 is Debited","Message",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                JButton b2Button = new JButton("Rs.1000");
+                b2Button.setBounds(170,170,150,50);
+                b2Button.setBackground(Color.WHITE);
+                b2Button.setForeground(Color.BLACK);
+                panel1.add(b2Button);
+                b2Button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(frame6,"Rs.1000 is Debited","Message",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                JButton b3Button = new JButton("Rs.5000");
+                b3Button.setBounds(170,240,150,50);
+                b3Button.setBackground(Color.WHITE);
+                b3Button.setForeground(Color.BLACK);
+                panel1.add(b3Button);
+                b3Button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(frame6,"Rs.5000 is Debited","Message",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                JButton b4Button = new JButton("Rs.500");
+                b4Button.setBounds(460,100,150,50);
+                b4Button.setBackground(Color.WHITE);
+                b4Button.setForeground(Color.BLACK);
+                panel1.add(b4Button);
+                b4Button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(frame6,"Rs.500 is Debited","Message",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                JButton b5Button = new JButton("Rs.2000");
+                b5Button.setBounds(460,170,150,50);
+                b5Button.setBackground(Color.WHITE);
+                b5Button.setForeground(Color.BLACK);
+                panel1.add(b5Button);
+                b5Button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(frame6,"Rs.2000 is Debited","Message",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                JButton b6Button = new JButton("Rs.10000");
+                b6Button.setBounds(460,240,150,50);
+                b6Button.setBackground(Color.WHITE);
+                b6Button.setForeground(Color.BLACK);
+                panel1.add(b6Button);
+                b6Button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(frame6,"Rs.10000 is Debited","Message",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
+                JButton baButton = new JButton("Back");
+                baButton.setBounds(560,330,80,30);
+                baButton.setBackground(Color.WHITE);
+                baButton.setForeground(Color.BLACK);
+                panel1.add(baButton);
+                baButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        frame6.setVisible(false);
+                        frame5.setVisible(true);
+
+                    }
+                });
+                frame6.setVisible(true);  
+            }
+        });
+         JButton lable2 = new JButton("Pin Change");
+         lable2.setBackground(Color.WHITE);
+         lable2.setForeground(Color.BLACK);
+         lable2.setBounds(170,240,150,50);
+         pJPanel1.add(lable2);
+         lable2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               frame5.setVisible(false); 
+               
+               JFrame frame7 = new JFrame("Pin Change");
+               frame7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               frame7.setSize(900, 450);
+               frame7.setLayout(null);
+
+               JPanel panel2 = new JPanel();
+               panel2.setLayout(null);
+               panel2.setSize(900, 500);
+               panel2.setBackground(Color.BLACK);
+               frame7.add(panel2);
+
+               JLabel label2 = new JLabel("Change Your Pin");
+               label2.setHorizontalAlignment(SwingConstants.CENTER);
+               label2.setFont(new Font("Arial",Font.BOLD,40));
+               label2.setBounds(120,20,550,50);
+               label2.setForeground(Color.WHITE);
+               panel2.add(label2);
+
+               JLabel label3 = new JLabel("New Pin       :");
+               label3.setHorizontalAlignment(SwingConstants.CENTER);
+               label3.setFont(new Font("Arial",Font.PLAIN,30));
+               label3.setBounds(80,110,300,50);
+               label3.setForeground(Color.WHITE);
+               panel2.add(label3);
+
+               JTextField field1 = new JTextField();
+               field1.setBounds(360,120,300,30);
+               field1.setBackground(Color.WHITE);
+               field1.setForeground(Color.BLACK);
+               panel2.add(field1);
+
+               JLabel label4 = new JLabel("Re-Enter Pin    :");
+               label4.setHorizontalAlignment(SwingConstants.CENTER);
+               label4.setFont(new Font("Arial",Font.PLAIN,30));
+               label4.setBounds(80,190,300,50);
+               label4.setForeground(Color.WHITE);
+               panel2.add(label4);
+
+               JTextField field2 = new JTextField();
+               field2.setBounds(360,200,300,30);
+               field2.setBackground(Color.WHITE);
+               field2.setForeground(Color.BLACK);
+               panel2.add(field2);
+
+               JButton button2 = new JButton("Change");
+               button2.setBounds(430,270,150,30);
+               button2.setBackground(Color.WHITE);
+               button2.setForeground(Color.BLACK);
+               panel2.add(button2);
+               button2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String pin = field1.getText().trim();
+                    String rePin = field2.getText().trim();
+
+                    if (pin.isEmpty() || rePin.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame7, "PIN fields cannot be empty!", "Message", JOptionPane.ERROR_MESSAGE);
+                    } else if (!pin.matches("\\d{4}")) { 
+                   JOptionPane.showMessageDialog(frame7, "Invalid! PIN must be exactly 4 digits.", "Message", JOptionPane.ERROR_MESSAGE);
+                   } else if (!pin.equals(rePin)) { 
+                  JOptionPane.showMessageDialog(frame7, "PINs do not match!", "Message", JOptionPane.ERROR_MESSAGE);
+                   } else {
+                  JOptionPane.showMessageDialog(frame7, "Your PIN has been saved!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+               });
+               JButton button3 = new JButton("Clear");
+               button3.setBounds(380,320,100,30);
+               button3.setBackground(Color.WHITE);
+               button3.setForeground(Color.BLACK);
+               panel2.add(button3);
+               button3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                  field2.setText(" "); 
+                  field1.setText(" ");
+                }
+               });
+               JButton button4 = new JButton("Back");
+               button4.setBounds(530,320,100,30);
+               button4.setBackground(Color.WHITE);
+               button4.setForeground(Color.BLACK);
+               panel2.add(button4);
+
+               button4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   frame7.setVisible(false);
+                   frame5.setVisible(true);
+                }
+               });
+               frame7.setVisible(true);
+            }
+         });
+         JButton lable3 = new JButton("Cash Withdrawl");
+         lable3.setBackground(Color.WHITE);
+         lable3.setForeground(Color.black);
+         lable3.setBounds(460,100,150,50);
+         pJPanel1.add(lable3);
+        lable3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              frame5.setVisible(false); 
+              
+              JFrame frame8=new JFrame("Cash Withdrawl");           
+              frame8.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+              frame8.setSize(900, 450);
+              frame8.setLayout(null);
+
+              JPanel panel3 = new JPanel();
+              panel3.setLayout(null);
+              panel3.setSize(900, 500);
+              panel3.setBackground(Color.BLACK);
+              frame8.add(panel3);
+
+              JLabel label3 = new JLabel("Withdrawl Limit is Rs.10,000");
+              label3.setHorizontalAlignment(SwingConstants.CENTER);
+              label3.setFont(new Font("Arial",Font.BOLD,30));
+              label3.setBounds(120,20,550,50);
+              label3.setForeground(Color.WHITE);
+              panel3.add(label3);
+
+              JLabel label4 = new JLabel("Please Enter Your Amount");
+              label4.setHorizontalAlignment(SwingConstants.CENTER);
+              label4.setFont(new Font("Arial",Font.PLAIN,25));
+              label4.setBounds(120,100,550,50);
+              label4.setForeground(Color.WHITE);
+              panel3.add(label4);
+
+              JTextField field3 = new JTextField("Rs. ");
+              field3.setBackground(Color.WHITE);
+              field3.setBounds(190,180,400,40);
+              field3.setForeground(Color.BLACK);
+              panel3.add(field3);
+
+              JButton b1 = new JButton("Withdraw");
+              b1.setBackground(Color.WHITE);
+              b1.setForeground(Color.BLACK);
+              b1.setBounds(320,240,150,50);
+              panel3.add(b1);
+              b1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String amountText = field3.getText().trim();
+                    amountText = amountText.replaceAll("[^0-9]", "");
+                    if(!amountText.isEmpty() && amountText.matches("\\d+") && Integer.parseInt(amountText) > 0 && Integer.parseInt(amountText)<=10000) { 
+                        JOptionPane.showMessageDialog(frame8,"Rs. " + amountText + " Withdrawl is Successful");
+                    }else {
+                        JOptionPane.showMessageDialog(frame8,"Invalid");
+
+
+                    }
+                }
+              });
+              JButton b2 = new JButton("Clear");
+              b2.setBackground(Color.WHITE);
+              b2.setForeground(Color.BLACK);
+              b2.setBounds(270,320,100,50);
+              panel3.add(b2);
+              b2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    field3.setText("Rs. ");
+
+                }
+              });
+              JButton b3 = new JButton("Back");
+              b3.setBackground(Color.WHITE);
+              b3.setForeground(Color.BLACK);
+              b3.setBounds(410,320,100,50);
+              panel3.add(b3);
+              b3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   frame8.setVisible(false);
+                   frame5.setVisible(true); 
+                }
+              });
+
+              frame8.setVisible(true);
+            }
+        });
+         JButton lable4 = new JButton("Mini Statement");
+         lable4.setBackground(Color.WHITE);
+         lable4.setForeground(Color.black);
+         lable4.setBounds(460,170,150,50);
+         pJPanel1.add(lable4);
+         lable4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame5.setVisible(false);
+
+                JFrame frame9=new JFrame("Mini Statement");           
+                frame9.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame9.setSize(900, 450);
+                frame9.setLayout(null);
+
+                JPanel panel4 = new JPanel();
+                panel4.setLayout(null);
+                panel4.setSize(900, 500);
+                panel4.setBackground(Color.BLACK);
+                frame9.add(panel4);
+
+                JLabel label3 = new JLabel("Indian Bank");
+                label3.setHorizontalAlignment(SwingConstants.CENTER);
+                label3.setFont(new Font("Arial",Font.BOLD,30));
+                label3.setBounds(120,20,550,50);
+                label3.setForeground(Color.WHITE);
+                panel4.add(label3);
+
+                JLabel label4 = new JLabel("Card Number  :");
+                label4.setFont(new Font("Arial",Font.PLAIN,25));
+                label4.setBounds(180,90,550,50);
+                label4.setForeground(Color.WHITE);
+                panel4.add(label4);
+
+                JLabel label5 = new JLabel("5040XXXXXXXX3341");
+                label5.setFont(new Font("Arial",Font.PLAIN,25));
+                label5.setBounds(370,90,550,50);
+                label5.setForeground(Color.WHITE);
+                panel4.add(label5);
+
+                JButton b3 = new JButton("Back");
+                b3.setBackground(Color.WHITE);
+                b3.setForeground(Color.BLACK);
+                b3.setBounds(460,290,100,50);
+                panel4.add(b3);
+                b3.addActionListener(new ActionListener() {
+                  @Override
+                  public void actionPerformed(ActionEvent e) {
+                     frame9.setVisible(false);
+                     frame5.setVisible(true); 
+                  }
+                });
+
+
+                frame9.setVisible(true);
+            }
+         });
+
+         JButton lable5 = new JButton("Balance Enquiry");
+         lable5.setBackground(Color.WHITE);
+         lable5.setForeground(Color.black);
+         lable5.setBounds(460,240,150,50);
+         pJPanel1.add(lable5);
+         lable5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               frame5.setVisible(false); 
+               JFrame frame10=new JFrame("Balance Enquiry");           
+               frame10.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               frame10.setSize(900, 450);
+               frame10.setLayout(null);
+
+               JPanel panel5 = new JPanel();
+               panel5.setLayout(null);
+               panel5.setSize(900, 500);
+               panel5.setBackground(Color.BLACK);
+               frame10.add(panel5);
+
+               JLabel label3 = new JLabel("Total Balance");
+               label3.setHorizontalAlignment(SwingConstants.CENTER);
+               label3.setFont(new Font("Arial",Font.BOLD,30));
+               label3.setBounds(120,20,550,50);
+               label3.setForeground(Color.WHITE);
+               panel5.add(label3);
+
+               JLabel label4 = new JLabel("Your Current Account Balance is");
+               label4.setHorizontalAlignment(SwingConstants.CENTER);
+               label4.setFont(new Font("Arial",Font.PLAIN,30));
+               label4.setBounds(100,120,550,50);
+               label4.setForeground(Color.WHITE);
+               panel5.add(label4);
+
+               JButton b3 = new JButton("Back");
+               b3.setBackground(Color.WHITE);
+               b3.setForeground(Color.BLACK);
+               b3.setBounds(460,290,100,50);
+               panel5.add(b3);
+               b3.addActionListener(new ActionListener() {
+                 @Override
+                 public void actionPerformed(ActionEvent e) {
+                    frame10.setVisible(false);
+                    frame5.setVisible(true); 
+                 }
+               });
+
+
+               frame10.setVisible(true);
+            }
+         });
+
+         JButton exit = new JButton("Exit");
+         exit.setBounds(580,360,80,30);
+         exit.setBackground(Color.WHITE);
+         exit.setForeground(Color.black);
+         pJPanel1.add(exit);
+         exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame5.setVisible(false);
+            }
+         });
+        frame5.setVisible(true);
+
+    }
+static class ImagePanel extends JPanel {
+    private Color backgroundColor;
+
+    public ImagePanel(Color bg) {
+        this.backgroundColor = bg;
+        setBackground(backgroundColor);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        ImageIcon icon = new ImageIcon("resources/bankImage.jpg");
+        Image image = icon.getImage();
+        int x = 30;
+        int y = 20;
+        int width = 90;
+        int height = 90;
+        g.drawImage(image, x, y, width, height, this);
+    }
 }
+}
+
+
+
